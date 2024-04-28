@@ -20,6 +20,7 @@ import bootstrap from '../../src/assets/imgs/bootstrap-logo-69A1CCC10B-seeklogo.
 import vite from '../../src/assets/imgs/vite_logo.svg'
 import flagsTH from '../../src/assets/flags/thai.png'
 import flagsEN from '../../src/assets/flags/en-us.svg'
+import profileMe from '../../src/assets/imgs/2567-04-28.png'
 
 export const IMGS = {
   me_1: me_1,
@@ -43,4 +44,5 @@ export const IMGS = {
   vite: vite,
   flagsTH: flagsTH,
   flagsEN: flagsEN,
+  profileMe: profileMe,
 }
