@@ -31,7 +31,9 @@ function Skillset(props: Props) {
         <div className="flex-1"></div>
         <div className="flex-1">
           <div>
-            <p className="text-2xl xl:text-4xl md:text-4xl">You can reach me through:</p>
+            <p className="text-2xl xl:text-4xl md:text-4xl">
+            {language == Languages.EN ? 'You can reach me through:' : 'สามารถติดต่อผมได้ ทาง'}
+              </p>
           </div>
           <div>
             <p className="underline text-xl xl:text-3xl md:text-3xl">watcharachai.sk@gmail.com</p>
