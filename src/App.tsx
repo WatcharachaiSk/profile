@@ -5,7 +5,10 @@ import './App.css';
 import NavBar from './components/navber/NavBar';
 import HomePage from './pages/home/HomePage';
 import { SelectChangeEvent } from '@mui/material';
-import AboutMe from './pages/home/AboutMe';
+import AboutMe from './pages/AboutMe';
+import WorkExperience from './pages/WorkExperience';
+// import Cards from './pages/Cards';
+import Skillset from './pages/Skillset';
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -31,10 +34,15 @@ function App() {
   return (
     <div style={{ fontFamily: 'THSarabunNew', fontSize: 22 }}>
       <NavBar handleChangeLanguage={handleChangeLanguage} language={language} />
-      <div className="flex flex-col" style={{ fontFamily: 'THSarabunNew', fontSize: 18 }}>
+      <div className="flex flex-col" style={{ fontFamily: 'THSarabunNew', fontSize: 18  }}>
         <HomePage language={language} />
-        <div className='mt-2'/>
+        <div className="mt-2" />
         <AboutMe language={language} />
+        <div className="mt-2" />
+        <WorkExperience language={language} />
+        <div className="mt-10" />
+        <Skillset language={language} />
+
         {/* <h1 className="text-3xl font-bold ">Hello world!</h1> */}
       </div>
     </div>

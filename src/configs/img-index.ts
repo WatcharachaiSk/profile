@@ -21,6 +21,14 @@ import vite from '../../src/assets/imgs/vite_logo.svg'
 import flagsTH from '../../src/assets/flags/thai.png'
 import flagsEN from '../../src/assets/flags/en-us.svg'
 import profileMe from '../../src/assets/imgs/2567-04-28.png'
+import asInternship from '../../src/assets/imgs/asInternship.png'
+import dbEaver from '../../src/assets/logos/DBeaver_logo.svg.png'
+import figma from '../../src/assets/logos/figma.png'
+import dockerLogo from '../../src/assets/logos/logo-docker.png'
+import gitH from '../../src/assets/logos/logo-gith.webp'
+import vsCode from '../../src/assets/logos/logo-vscode.webp'
+import postMan from '../../src/assets/logos/postman-icon.webp'
+import soutreeLogo from '../../src/assets/logos/soutreelogo.png'
 
 export const IMGS = {
   me_1: me_1,
@@ -45,4 +53,15 @@ export const IMGS = {
   flagsTH: flagsTH,
   flagsEN: flagsEN,
   profileMe: profileMe,
+  asInternship: asInternship,
+}
+
+export const IMGS_LOGOS = {
+  dbEaver: dbEaver,
+  figma: figma,
+  dockerLogo: dockerLogo,
+  gitH: gitH,
+  vsCode: vsCode,
+  postMan: postMan,
+  soutreeLogo: soutreeLogo
 }
