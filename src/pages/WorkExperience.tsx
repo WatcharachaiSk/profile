@@ -3,6 +3,8 @@ import { Languages } from '../configs/language';
 
 interface Props {
   language: string;
+  years: number;
+  months: number;
 }
 
 function WorkExperience(props: Props) {
@@ -10,8 +12,17 @@ function WorkExperience(props: Props) {
 
   return (
     <div className="flex flex-col h-fit w-screen">
-      <div className="flex justify-center text-3xl xl:text-6xl md:text-5xl" style={{ fontFamily: 'THSarabunNew-Bold' }}>
-        <p className="indent-5 text-blue-600">{language == Languages.EN ? 'My Work Experience / Project Works' : 'ประสบการณ์การทำงาน / ผลงาน'}</p>
+      <div className="flex justify-center items-center text-xl xl:text-6xl md:text-5xl">
+        <p style={{ fontFamily: 'THSarabunNew-Bold' }} className="indent-5 text-blue-600">
+          {language == Languages.EN ? 'My Work Experience / Project Work' : 'ประสบการณ์การทำงาน / ผลงาน'}
+        </p>
+        <p className="indent-3 text-lg md:text-xl xl:text-xl">
+          {language == Languages.EN
+            ? `(${props.years == 1 ? `${props.years} year` : `${props.years} years`} ${
+                props.months == 1 ? `${props.months} month` : `${props.months} months`
+              })`
+            : `(${props.years} ปี ${props.months} เดือน)`}
+        </p>
       </div>
       {/* Time Line */}
       <div className="flex justify-center">
@@ -138,7 +149,7 @@ function WorkExperience(props: Props) {
           </div>
           <div className="xl:indent-28 md:indent-20 flex">
             <p className="text-base xl:text-xl md:text-lg">
-              {language == Languages.EN ? 'April 2566 - Present (1 year)' : 'เม.ย. 2566 - ปัจจุบัน (1 ปี)'}
+              {language == Languages.EN ? 'April 2023 - Present (1 year)' : 'เม.ย. 2566 - ปัจจุบัน (1 ปี)'}
             </p>
           </div>
         </div>
