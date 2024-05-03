@@ -18,8 +18,8 @@ function WorkExperience(props: Props) {
         </p>
         <p className="indent-3 text-lg md:text-xl xl:text-xl">
           {language == Languages.EN
-            ? `(${props.years == 1 ? `${props.years} year` : `${props.years} years`} ${
-                props.months == 1 ? `${props.months} month` : `${props.months} months`
+            ? `(${props.years == 1 || props.years == 0 ? `${props.years} year` : `${props.years} years`} ${
+                props.months == 1 || props.months == 0 ? `${props.months} month` : `${props.months} months`
               })`
             : `(${props.years} ปี ${props.months} เดือน)`}
         </p>
