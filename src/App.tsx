@@ -85,6 +85,10 @@ function App() {
     };
   }, []);
 
+  const openWebsite = (link: string) => {
+    window.open(link);
+  };
+
   return (
     <div style={{ fontFamily: 'THSarabunNew', fontSize: 22 }}>
       <NavBar handleChangeLanguage={handleChangeLanguage} handleButtonClick={handleButtonClick} language={language} />
@@ -101,7 +105,7 @@ function App() {
         </div>
         <div className="mt-10" />
         <div ref={scrollAboutRef}>
-          <Skillset language={language} />
+          <Skillset openWebsite={openWebsite} language={language} />
         </div>
         <div className="mt-96" />
         <div ref={scrollCvRef}>

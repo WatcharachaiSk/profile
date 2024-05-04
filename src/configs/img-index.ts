@@ -29,6 +29,7 @@ import gitH from '../../src/assets/logos/logo-gith.webp'
 import vsCode from '../../src/assets/logos/logo-vscode.webp'
 import postMan from '../../src/assets/logos/postman-icon.webp'
 import soutreeLogo from '../../src/assets/logos/soutreelogo.png'
+import profileW from '../../src/assets/imgs/profileW.png'
 
 export const IMGS = {
   me_1: me_1,
@@ -54,6 +55,7 @@ export const IMGS = {
   flagsEN: flagsEN,
   profileMe: profileMe,
   asInternship: asInternship,
+  profileW: profileW
 }
 
 export const IMGS_LOGOS = {
