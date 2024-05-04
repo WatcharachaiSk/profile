@@ -11,10 +11,12 @@ import WorkExperience from './pages/WorkExperience';
 import Skillset from './pages/Skillset';
 import { ScrollEnum } from './enums/scroll.enum';
 import Cv from './pages/Cv';
+import { GoArrowUp } from 'react-icons/go';
 
 function App() {
   // const [count, setCount] = useState(0);
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'EN');
+  const [showButton, setShowButton] = useState(false);
 
   // set years and months
   const [startDate] = useState(new Date('June 1, 2022'));
@@ -66,6 +68,23 @@ function App() {
     }
   };
 
+  // check Scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = document.documentElement.scrollTop;
+      if (scrolled > 100) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <div style={{ fontFamily: 'THSarabunNew', fontSize: 22 }}>
       <NavBar handleChangeLanguage={handleChangeLanguage} handleButtonClick={handleButtonClick} language={language} />
@@ -86,8 +105,22 @@ function App() {
         </div>
         <div className="mt-96" />
         <div ref={scrollCvRef}>
-          <Cv language={language} />
+          <Cv />
         </div>
+        {showButton && (
+          <button
+            className="text-base fixed bottom-4 right-4 z-10 p-3 bg-blue-500 text-white rounded-full shadow-lg transition-opacity"
+            onClick={() => {
+              handleButtonClick(ScrollEnum.Home);
+            }}
+          >
+            <div className="flex justify-center items-center">
+              <GoArrowUp size={13} />
+              Top
+            </div>
+          </button>
+        )}
+
         {/* <h1 className="text-3xl font-bold ">Hello world!</h1> */}
       </div>
     </div>
