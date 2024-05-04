@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import reactLogo from './assets/react.svg';
 // import viteLogo from '/vite.svg';
 import './App.css';
@@ -9,6 +9,8 @@ import AboutMe from './pages/AboutMe';
 import WorkExperience from './pages/WorkExperience';
 // import Cards from './pages/Cards';
 import Skillset from './pages/Skillset';
+import { ScrollEnum } from './enums/scroll.enum';
+import Cv from './pages/Cv';
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -44,18 +46,48 @@ function App() {
     setLanguage(event.target.value as string);
   };
 
+  // set Ref Page
+  const scrollHomeRef = useRef<any>(null);
+  const scrollCvRef = useRef<any>(null);
+  const scrollWorksRef = useRef<any>(null);
+  const scrollAboutRef = useRef<any>(null);
+
+  // ฟังก์ชันที่จะถูกเรียกเมื่อกดปุ่ม
+  const handleButtonClick = (isScroll: string) => {
+    // ให้ใช้ method scrollIntoView() บน ref.current
+    if (isScroll == ScrollEnum.Home) {
+      scrollHomeRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (isScroll == ScrollEnum.Cv) {
+      scrollCvRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (isScroll == ScrollEnum.Works) {
+      scrollWorksRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (isScroll == ScrollEnum.About) {
+      scrollAboutRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div style={{ fontFamily: 'THSarabunNew', fontSize: 22 }}>
-      <NavBar handleChangeLanguage={handleChangeLanguage} language={language} />
+      <NavBar handleChangeLanguage={handleChangeLanguage} handleButtonClick={handleButtonClick} language={language} />
       <div className="flex flex-col" style={{ fontFamily: 'THSarabunNew', fontSize: 18 }}>
-        <HomePage language={language} />
+        <div ref={scrollHomeRef}>
+          <HomePage language={language} />
+        </div>
         <div className="mt-2" />
+
         <AboutMe language={language} />
         <div className="mt-2" />
-        <WorkExperience language={language} years={years} months={months} />
+        <div ref={scrollWorksRef}>
+          <WorkExperience language={language} years={years} months={months} />
+        </div>
         <div className="mt-10" />
-        <Skillset language={language} />
-
+        <div ref={scrollAboutRef}>
+          <Skillset language={language} />
+        </div>
+        <div className="mt-96" />
+        <div ref={scrollCvRef}>
+          <Cv language={language} />
+        </div>
         {/* <h1 className="text-3xl font-bold ">Hello world!</h1> */}
       </div>
     </div>

@@ -1,11 +1,13 @@
 // import React from 'react';
 
-import { Button, FormControl, InputLabel, MenuItem, Select, Tooltip } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { Languages } from '../../configs/language';
 import { IMGS } from '../../configs/img-index';
+import { ScrollEnum } from '../../enums/scroll.enum';
 
 interface Props {
-  handleChangeLanguage: void | any;
+  handleChangeLanguage: (event: SelectChangeEvent) => void;
+  handleButtonClick: (isScroll: string) => void;
   language: string;
 }
 function NavBar(props: Props) {
@@ -22,32 +24,46 @@ function NavBar(props: Props) {
             <li>
               <a
                 href="#"
+                onClick={() => {
+                  props.handleButtonClick(ScrollEnum.Home);
+                }}
                 className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                 aria-current="page"
               >
-                <Tooltip title={language == Languages.EN ? 'in development' : 'กำลังพัฒนา'} arrow>
-                  <Button>{language == Languages.EN ? 'Home' : 'หลัก'}</Button>
-                </Tooltip>
+                {language == Languages.EN ? 'Home' : 'หลัก'}
               </a>
             </li>
             <li>
               <a
+                onClick={() => {
+                  props.handleButtonClick(ScrollEnum.Cv);
+                }}
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                <Tooltip title={language == Languages.EN ? 'in development' : 'กำลังพัฒนา'} arrow>
-                  <Button> {language == Languages.EN ? 'CV' : 'ประวัติ'}</Button>
-                </Tooltip>
+                {language == Languages.EN ? 'CV' : 'ประวัติ'}
               </a>
             </li>
             <li>
               <a
+                onClick={() => {
+                  props.handleButtonClick(ScrollEnum.Works);
+                }}
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                <Tooltip title={language == Languages.EN ? 'in development' : 'กำลังพัฒนา'} arrow>
-                  <Button> {language == Languages.EN ? 'Work Experience' : 'ประสบการณ์การทำงาน'}</Button>
-                </Tooltip>
+                {language == Languages.EN ? 'Work Experience' : 'ประสบการณ์การทำงาน'}
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => {
+                  props.handleButtonClick(ScrollEnum.About);
+                }}
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
+                {language == Languages.EN ? 'About' : 'เกี่ยวกับ/ติดต่อ'}
               </a>
             </li>
             <li>
