@@ -1,10 +1,12 @@
 // import React from 'react';
 import { Languages } from '../configs/language';
+import { LinkEnum } from '../enums/link.enum';
 
 interface Props {
   language: string;
   years: number;
   months: number;
+  openWebsite: (link: string) => void;
 }
 
 function WorkExperience(props: Props) {
@@ -42,6 +44,18 @@ function WorkExperience(props: Props) {
             <p className="text-base xl:text-xl md:text-lg">
               {language == Languages.EN ? 'June - October 2022 (4 months)' : 'มิ.ย. - ต.ค. 2565 (4 เดือน)'}
             </p>
+          </div>
+          <div className="xl:indent-28 md:indent-20 flex flex-col md:flex-row xl:flex-row">
+            <a
+              href="#"
+              onClick={() => {
+                props.openWebsite(LinkEnum.LinkCoop);
+              }}
+              className="text-base xl:text-xl md:text-lg text-blue-600"
+            >
+              {language == Languages.EN ? `You can watch it at: [facebook] click` : `สามารถรับชมได้ที่: [facebook] คลิก`}
+            </a>
+            <p className="indent-2 text-black">{language == Languages.EN ? 'At minute 2:16:00.' : 'นาทีที่: 2:16:00'}</p>
           </div>
         </div>
         <div className="flex flex-none justify-center">
@@ -95,6 +109,17 @@ function WorkExperience(props: Props) {
             <p className="text-base xl:text-xl md:text-lg">
               {language == Languages.EN ? 'November 2022 - February 2023 (4 months)' : 'พ.ย. 2565 - ก.พ. 2566 (4 เดือน)'}
             </p>
+          </div>
+          <div className="xl:indent-28 md:indent-20 flex">
+            <a
+              href="#"
+              onClick={() => {
+                props.openWebsite(LinkEnum.YTTs);
+              }}
+              className="text-base xl:text-xl md:text-lg text-blue-600"
+            >
+              {language == Languages.EN ? `You can watch it at: ${LinkEnum.YTTs} click` : `สามารถรับชมได้ที่: ${LinkEnum.YTTs} คลิก`}
+            </a>
           </div>
         </div>
         <div className="flex flex-none justify-center">

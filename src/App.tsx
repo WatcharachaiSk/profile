@@ -101,7 +101,7 @@ function App() {
         <AboutMe language={language} />
         <div className="mt-2" />
         <div ref={scrollWorksRef}>
-          <WorkExperience language={language} years={years} months={months} />
+          <WorkExperience openWebsite={openWebsite} language={language} years={years} months={months} />
         </div>
         <div className="mt-10" />
         <div ref={scrollAboutRef}>
