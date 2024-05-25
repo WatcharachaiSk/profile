@@ -12,11 +12,40 @@ import Skillset from './pages/Skillset';
 import { ScrollEnum } from './enums/scroll.enum';
 import Cv from './pages/Cv';
 import { GoArrowUp } from 'react-icons/go';
+import { AppDispatch, RootState } from './app/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData, updateViewer } from './features/viewerSlice';
+
+interface Viewer {
+  date: Date;
+  counts_view: number;
+}
+let isFetchData = false;
 
 function App() {
+  // const [isFetchData, setIsFetchData] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+  const status = useSelector((state: RootState) => state.viewer?.status);
+  // const error = useSelector((state: RootState) => state.viewer?.error);
+
+  useEffect(() => {
+    console.log('status is', status);
+
+    if (status === 'idle' && !isFetchData) {
+      dispatch(fetchData());
+
+      isFetchData = true;
+    }
+  }, [isFetchData]);
+
+  const openWebsite = (link: string) => {
+    window.open(link);
+  };
+
   // const [count, setCount] = useState(0);
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'EN');
   const [showButton, setShowButton] = useState(false);
+  const [dataStoredViewer, setDataStoredViewer] = useState<Viewer>({ date: new Date(), counts_view: 0 });
 
   // set years and months
   const [startDate] = useState(new Date('June 1, 2022'));
@@ -32,14 +61,51 @@ function App() {
     setMonths(diffMonths);
   }, [startDate, currentDate]);
 
+  const isSameDay = (date1: Date, date2: Date) => {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+
+    return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+  };
+
+  const getStoredViewer = () => {
+    const storedViewer: any = localStorage.getItem('viewer');
+    const data: Viewer = JSON.parse(storedViewer);
+    setDataStoredViewer(data);
+  };
+
   useEffect(() => {
+    const date = new Date();
+
     // เช็คว่ามีค่า language อยู่ใน localStorage หรือไม่
     const storedLanguage = localStorage.getItem('language');
+    const storedViewer = localStorage.getItem('viewer');
     // ถ้าไม่มีค่า language ใน localStorage ให้ตั้งค่า language เป็น 'EN'
     if (!storedLanguage) {
       localStorage.setItem('language', 'EN');
     }
+    if (!storedViewer) {
+      const payload: Viewer = {
+        date: date,
+        counts_view: 1,
+      };
+      localStorage.setItem('viewer', JSON.stringify(payload));
+    } else {
+      let payload: Viewer = JSON.parse(storedViewer);
+      if (isSameDay(payload.date, date) && payload.counts_view < 22) {
+        payload.counts_view = payload.counts_view + 1;
+        localStorage.setItem('viewer', JSON.stringify(payload));
+      }
+    }
+    getStoredViewer();
   }, []);
+
+  useEffect(() => {
+    if (dataStoredViewer.counts_view % 2 == 0 && dataStoredViewer.counts_view != 0 && dataStoredViewer.counts_view != 22) {
+      console.log('dataStoredViewer.counts_view is ', dataStoredViewer.counts_view);
+      dispatch(updateViewer());
+    }
+  }, [dataStoredViewer.counts_view]);
 
   const handleChangeLanguage = (event: SelectChangeEvent) => {
     // console.log('event.target.value is ', event.target.value);
@@ -84,10 +150,6 @@ function App() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  const openWebsite = (link: string) => {
-    window.open(link);
-  };
 
   return (
     <div style={{ fontFamily: 'THSarabunNew', fontSize: 22 }}>

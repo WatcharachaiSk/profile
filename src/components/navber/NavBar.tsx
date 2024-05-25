@@ -4,6 +4,8 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 import { Languages } from '../../configs/language';
 import { IMGS } from '../../configs/img-index';
 import { ScrollEnum } from '../../enums/scroll.enum';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 interface Props {
   handleChangeLanguage: (event: SelectChangeEvent) => void;
@@ -11,6 +13,8 @@ interface Props {
   language: string;
 }
 function NavBar(props: Props) {
+  const data = useSelector((state: RootState) => state.viewer?.data);
+
   const { language } = props;
 
   return (
@@ -95,9 +99,10 @@ function NavBar(props: Props) {
                 </FormControl>
               </a>
             </li>
+            <li>{language == Languages.EN ? `${data.count_view} views` : `เข้าชม ${data.count_view} ครั้ง`}</li>
           </ul>
         </div>
-        <div className="md:hidden xl:hidden">
+        <div className="flex-col md:hidden xl:hidden">
           <FormControl sx={{ minWidth: 100, height: 5 }} size="small">
             <InputLabel id="demo-simple-select-autowidth-label">{language == Languages.EN ? 'language' : 'ภาษา'}</InputLabel>
             <Select
@@ -120,6 +125,7 @@ function NavBar(props: Props) {
               </MenuItem>
             </Select>
           </FormControl>
+          <div className='mt-2 text-base text-center'>{language == Languages.EN ? `${data.count_view} views` : `เข้าชม ${data.count_view} ครั้ง`}</div>
         </div>
         {/*  */}
       </div>
