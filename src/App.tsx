@@ -29,7 +29,7 @@ function App() {
   // const error = useSelector((state: RootState) => state.viewer?.error);
 
   useEffect(() => {
-    console.log('status is', status);
+    // console.log('status is', status);
 
     if (status === 'idle' && !isFetchData) {
       dispatch(fetchData());
@@ -49,9 +49,13 @@ function App() {
 
   // set years and months
   const [startDate] = useState(new Date('June 1, 2022'));
+  const [startDateES] = useState(new Date('April 1, 2023'));
   const [currentDate] = useState(new Date());
   const [years, setYears] = useState(0);
   const [months, setMonths] = useState(0);
+
+  const [yearsEs, setYearsEs] = useState(0);
+  const [monthsEs, setMonthsEs] = useState(0);
   useEffect(() => {
     const diff = currentDate.getTime() - startDate.getTime();
     const diffYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
@@ -59,6 +63,13 @@ function App() {
 
     setYears(diffYears);
     setMonths(diffMonths);
+
+    // Electronic Shell Co., Ltd.
+    const diffEs = currentDate.getTime() - startDateES.getTime();
+    const diffYearsEs = Math.floor(diffEs / (1000 * 60 * 60 * 24 * 365));
+    const diffMonthsEs = Math.floor((diffEs % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+    setYearsEs(diffYearsEs);
+    setMonthsEs(diffMonthsEs);
   }, [startDate, currentDate]);
 
   const isSameDay = (date1: Date, date2: Date) => {
@@ -92,8 +103,16 @@ function App() {
       localStorage.setItem('viewer', JSON.stringify(payload));
     } else {
       let payload: Viewer = JSON.parse(storedViewer);
-      if (isSameDay(payload.date, date) && payload.counts_view < 22) {
+      const checkDate = isSameDay(payload.date, date);
+      console.log('checkDate is', checkDate);
+
+      if (checkDate && payload.counts_view < 22) {
         payload.counts_view = payload.counts_view + 1;
+        localStorage.setItem('viewer', JSON.stringify(payload));
+      }
+      if (!checkDate) {
+        payload.date = date;
+        payload.counts_view = 1;
         localStorage.setItem('viewer', JSON.stringify(payload));
       }
     }
@@ -102,7 +121,7 @@ function App() {
 
   useEffect(() => {
     if (dataStoredViewer.counts_view % 2 == 0 && dataStoredViewer.counts_view != 0 && dataStoredViewer.counts_view != 22) {
-      console.log('dataStoredViewer.counts_view is ', dataStoredViewer.counts_view);
+      // console.log('dataStoredViewer.counts_view is ', dataStoredViewer.counts_view);
       dispatch(updateViewer());
     }
   }, [dataStoredViewer.counts_view]);
@@ -163,7 +182,7 @@ function App() {
         <AboutMe language={language} />
         <div className="mt-2" />
         <div ref={scrollWorksRef}>
-          <WorkExperience openWebsite={openWebsite} language={language} years={years} months={months} />
+          <WorkExperience openWebsite={openWebsite} language={language} years={years} months={months} yearsEs={yearsEs} monthsEs={monthsEs} />
         </div>
         <div className="mt-10" />
         <div ref={scrollAboutRef}>

@@ -6,6 +6,8 @@ interface Props {
   language: string;
   years: number;
   months: number;
+  yearsEs: number;
+  monthsEs: number;
   openWebsite: (link: string) => void;
 }
 
@@ -174,7 +176,12 @@ function WorkExperience(props: Props) {
           </div>
           <div className="xl:indent-28 md:indent-20 flex">
             <p className="text-base xl:text-xl md:text-lg">
-              {language == Languages.EN ? 'April 2023 - Present (1 year)' : 'เม.ย. 2566 - ปัจจุบัน (1 ปี)'}
+              {language == Languages.EN ? 'April 2023 - Present ' : 'เม.ย. 2566 - ปัจจุบัน '}
+              {language == Languages.EN
+                ? `(${props.yearsEs == 1 || props.yearsEs == 0 ? `${props.yearsEs} year` : `${props.yearsEs} years`} ${
+                    props.monthsEs == 1 || props.monthsEs == 0 ? `${props.monthsEs} month` : `${props.monthsEs} months`
+                  })`
+                : `(${props.yearsEs} ปี ${props.monthsEs} เดือน)`}
             </p>
           </div>
         </div>
