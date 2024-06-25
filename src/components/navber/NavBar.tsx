@@ -37,7 +37,7 @@ function NavBar(props: Props) {
                 {language == Languages.EN ? 'Home' : 'หลัก'}
               </a>
             </li>
-            <li>
+            {/* <li>
               <a
                 onClick={() => {
                   props.handleButtonClick(ScrollEnum.Cv);
@@ -47,7 +47,7 @@ function NavBar(props: Props) {
               >
                 {language == Languages.EN ? 'CV' : 'ประวัติ'}
               </a>
-            </li>
+            </li> */}
             <li>
               <a
                 onClick={() => {

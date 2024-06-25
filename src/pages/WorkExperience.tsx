@@ -176,12 +176,13 @@ function WorkExperience(props: Props) {
           </div>
           <div className="xl:indent-28 md:indent-20 flex">
             <p className="text-base xl:text-xl md:text-lg">
-              {language == Languages.EN ? 'April 2023 - Present ' : 'เม.ย. 2566 - ปัจจุบัน '}
-              {language == Languages.EN
+              {language == Languages.EN ? 'April 2023 - June 2024 (1 year 3 months)' : 'เม.ย. 2566 - มิ.ย. 2567 (1 ปี 3 เดือน)'}
+              {/* {language == Languages.EN ? 'April 2023 - Present ' : 'เม.ย. 2566 - ปัจจุบัน '} */}
+              {/* {language == Languages.EN
                 ? `(${props.yearsEs == 1 || props.yearsEs == 0 ? `${props.yearsEs} year` : `${props.yearsEs} years`} ${
                     props.monthsEs == 1 || props.monthsEs == 0 ? `${props.monthsEs} month` : `${props.monthsEs} months`
                   })`
-                : `(${props.yearsEs} ปี ${props.monthsEs} เดือน)`}
+                : `(${props.yearsEs} ปี ${props.monthsEs} เดือน)`} */}
             </p>
           </div>
         </div>
@@ -223,6 +224,49 @@ function WorkExperience(props: Props) {
               {language == Languages.EN
                 ? '- Employed various tools and libraries including Vite, Tailwindcss, Bootstrap, Lodash, Lottie, Axios, Moment, and Dotenv.'
                 : '- ใช้เครื่องมือและไลบรารีต่างๆ รวมถึง Vite, Tailwindcss, Bootstrap, Lodash, Lottie, Axios, Moment, และ Dotenv ในการพัฒนางาน'}
+            </p>
+          </div>
+        </div>
+      </div>
+      {/*  */}
+      <div className="flex justify-center">
+        <div className="flex flex-1 flex-col">
+          <div className="xl:indent-28 md:indent-16 flex">
+            <p className="text-lg xl:text-4xl md:text-2xl" style={{ fontFamily: 'THSarabunNew-Bold' }}>
+              {language == Languages.EN ? 'Full-Stack Developer' : 'Full-Stack Developer'}
+              <span className="text-blue-600"> {language == Languages.EN ? '(Contract)' : '(Contract)'}</span>
+            </p>
+          </div>
+          <div className="xl:indent-28 md:indent-20 flex">
+            <p className="text-base xl:text-2xl md:text-xl">{language == Languages.EN ? 'AIS Company' : 'AIS Company'}</p>
+          </div>
+          <div className="xl:indent-28 md:indent-20 flex">
+            <p className="text-base xl:text-xl md:text-lg">
+              {language == Languages.EN ? 'July 2024 - Present ' : 'ก.ค. 2567 - ปัจจุบัน '}
+              {language == Languages.EN
+                ? `(${props.yearsEs == 1 || props.yearsEs == 0 ? `${props.yearsEs} year` : `${props.yearsEs} years`} ${
+                    props.monthsEs == 1 || props.monthsEs == 0 ? `${props.monthsEs} month` : `${props.monthsEs} months`
+                  })`
+                : `(${props.yearsEs} ปี ${props.monthsEs} เดือน)`}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-none justify-center">
+          <ol className="relative border-s-8 border-blue-600 dark:border-gray-700">
+            <div className="absolute w-6 h-6 bg-blue-600 rounded-full mt-1.5 -start-4 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+          </ol>
+        </div>
+        <div className="flex flex-1 flex-col py-5">
+          <div>
+            <p className="mx-3 xl:indent-12 md:indent-5 text-lg xl:text-4xl md:text-2xl text-blue-600" style={{ fontFamily: 'THSarabunNew-Bold' }}>
+              Azure Cloud, AWS
+            </p>
+          </div>
+          <div className="mx-3 xl:indent-12 md:indent-5 text-base xl:text-2xl md:text-lg">
+            <p>
+              {language == Languages.EN
+                ? 'Support: When issues arise with the app, I can debug the code to identify the root cause of the problem and pass the work to the development team.'
+                : 'Support เมื่อเกิดปัญหาเกี่ยวกับ App เช็ค Code เพื่อหาสาเหตุของปัญหา และส่งต่องานให้กับทีม Dev'}
             </p>
           </div>
         </div>

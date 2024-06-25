@@ -49,7 +49,7 @@ function App() {
 
   // set years and months
   const [startDate] = useState(new Date('June 1, 2022'));
-  const [startDateES] = useState(new Date('April 1, 2023'));
+  const [startDateES] = useState(new Date('July 1, 2024'));
   const [currentDate] = useState(new Date());
   const [years, setYears] = useState(0);
   const [months, setMonths] = useState(0);
@@ -68,8 +68,16 @@ function App() {
     const diffEs = currentDate.getTime() - startDateES.getTime();
     const diffYearsEs = Math.floor(diffEs / (1000 * 60 * 60 * 24 * 365));
     const diffMonthsEs = Math.floor((diffEs % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-    setYearsEs(diffYearsEs);
-    setMonthsEs(diffMonthsEs);
+    if (diffYearsEs == -1) {
+      setYearsEs(0);
+    } else {
+      setYearsEs(diffYearsEs);
+    }
+    if (diffMonthsEs == -1) {
+      setMonthsEs(0);
+    } else {
+      setMonthsEs(diffMonthsEs);
+    }
   }, [startDate, currentDate]);
 
   const isSameDay = (date1: Date, date2: Date) => {
@@ -189,9 +197,7 @@ function App() {
           <Skillset openWebsite={openWebsite} language={language} />
         </div>
         <div className="mt-96" />
-        <div ref={scrollCvRef}>
-          <Cv />
-        </div>
+        <div ref={scrollCvRef}>{/* <Cv /> */}</div>
         {showButton && (
           <button
             className="text-base fixed bottom-4 right-4 z-10 p-3 bg-blue-500 text-white rounded-full shadow-lg transition-opacity"
