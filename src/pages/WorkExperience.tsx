@@ -233,7 +233,7 @@ function WorkExperience(props: Props) {
         <div className="flex flex-1 flex-col">
           <div className="xl:indent-28 md:indent-16 flex">
             <p className="text-lg xl:text-4xl md:text-2xl" style={{ fontFamily: 'THSarabunNew-Bold' }}>
-              {language == Languages.EN ? 'Full-Stack Developer' : 'Full-Stack Developer'}
+              {language == Languages.EN ? 'Programmer Analyst' : 'Programmer Analyst'}
               <span className="text-blue-600"> {language == Languages.EN ? '(Contract)' : '(Contract)'}</span>
             </p>
           </div>
@@ -259,14 +259,34 @@ function WorkExperience(props: Props) {
         <div className="flex flex-1 flex-col py-5">
           <div>
             <p className="mx-3 xl:indent-12 md:indent-5 text-lg xl:text-4xl md:text-2xl text-blue-600" style={{ fontFamily: 'THSarabunNew-Bold' }}>
-              Azure Cloud, AWS
+              Microsoft Azure
             </p>
           </div>
           <div className="mx-3 xl:indent-12 md:indent-5 text-base xl:text-2xl md:text-lg">
             <p>
               {language == Languages.EN
-                ? 'Support: When issues arise with the app, I can debug the code to identify the root cause of the problem and pass the work to the development team.'
-                : 'Support เมื่อเกิดปัญหาเกี่ยวกับ App เช็ค Code เพื่อหาสาเหตุของปัญหา และส่งต่องานให้กับทีม Dev'}
+                ? 'Supported and maintained the Loyalty Platform on Microsoft Azure.'
+                : 'สนับสนุนและดูแลแพลตฟอร์ม Loyalty บน Microsoft Azure'}
+            </p>
+            <p>
+              {language == Languages.EN
+                ? '- Investigated app-related issues by checking incoming error requests and identifying the root cause using Log Analysis.'
+                : '- ตรวจสอบปัญหาที่เกี่ยวข้องกับแอปพลิเคชันโดยการตรวจเช็คคำขอแจ้งข้อผิดพลาดที่เข้ามา และหาสาเหตุของปัญหาโดยใช้ Log Analysis'}
+            </p>
+            <p>
+              {language == Languages.EN
+                ? '- Collaborated with the SA and Dev teams by passing on issues for further resolution.'
+                : '- ทำงานร่วมกับทีม SA และทีม Dev โดยส่งต่อปัญหาเพื่อการแก้ไขเพิ่มเติม'}
+            </p>
+            <p>
+              {language == Languages.EN
+                ? '- Created Workbook Dashboards to monitor various requests coming into the system.'
+                : '- สร้าง Workbook Dashboards เพื่อเฝ้าติดตามคำขอต่างๆ ที่เข้ามาในระบบ'}
+            </p>
+            <p>
+              {language == Languages.EN
+                ? '- Tools used: Microsoft Azure, KQL, Log Analysis, Alert Systems, and Elastic Stack (ELK).'
+                : '- เครื่องมือที่ใช้: Microsoft Azure, KQL, Log Analysis, Alert Systems, และ Elastic Stack (ELK)'}
             </p>
           </div>
         </div>

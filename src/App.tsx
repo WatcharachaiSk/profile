@@ -197,7 +197,9 @@ function App() {
           <Skillset openWebsite={openWebsite} language={language} />
         </div>
         <div className="mt-96" />
-        <div ref={scrollCvRef}>{/* <Cv /> */}</div>
+        <div ref={scrollCvRef}>
+          <Cv />
+        </div>
         {showButton && (
           <button
             className="text-base fixed bottom-4 right-4 z-10 p-3 bg-blue-500 text-white rounded-full shadow-lg transition-opacity"
