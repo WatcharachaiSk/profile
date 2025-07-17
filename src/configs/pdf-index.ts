@@ -4,7 +4,7 @@ import pdfPrMa from '../assets/pdf/maProj.pdf'
 import cv_th from '../assets/pdf/CV_Watcharachai_TH.pdf'
 import cv_en from '../assets/pdf/CV_Watcharachai_EN.pdf'
 import cv_en_th from '../assets/pdf/CV_Watcharachai_EN_TH.pdf'
-import cv_new from '../assets/pdf/CV_Watcharachai_EN_TH_17072025.pdf'
+import cv_new from '../assets/pdf/CV_Watcharachai_EN_TH_17072025_1.pdf'
 
 export const PDF = {
   pdfCoop: pdfCoop,
