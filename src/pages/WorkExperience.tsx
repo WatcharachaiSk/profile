@@ -231,6 +231,7 @@ function WorkExperience(props: Props) {
       {/*  */}
       <div className="flex justify-center">
         <div className="flex flex-1 flex-col">
+          {/*  */}
           <div className="xl:indent-28 md:indent-16 flex">
             <p className="text-lg xl:text-4xl md:text-2xl" style={{ fontFamily: 'THSarabunNew-Bold' }}>
               {language == Languages.EN ? 'Programmer Analyst' : 'Programmer Analyst'}
@@ -242,7 +243,22 @@ function WorkExperience(props: Props) {
           </div>
           <div className="xl:indent-28 md:indent-20 flex">
             <p className="text-base xl:text-xl md:text-lg">
-              {language == Languages.EN ? 'July 2024 - Present ' : 'ก.ค. 2567 - ปัจจุบัน '}
+              {language == Languages.EN ? `Jul 2024 – Sep 2025 (1 year 3 months)` : `ก.ค. 2567 - ก.ย. 2568 (1 ปี 3 เดือน)`}
+            </p>
+          </div>
+          {/*  */}
+          <div className="xl:indent-28 md:indent-16 flex">
+            <p className="text-lg xl:text-4xl md:text-2xl" style={{ fontFamily: 'THSarabunNew-Bold' }}>
+              {language == Languages.EN ? 'Programmer Analyst' : 'Programmer Analyst'}
+              <span className="text-blue-600"> {language == Languages.EN ? '(Permanent)' : '(Permanent)'}</span>
+            </p>
+          </div>
+          <div className="xl:indent-28 md:indent-20 flex">
+            <p className="text-base xl:text-2xl md:text-xl">{language == Languages.EN ? 'AIS Company' : 'AIS Company'}</p>
+          </div>
+          <div className="xl:indent-28 md:indent-20 flex">
+            <p className="text-base xl:text-xl md:text-lg">
+              {language == Languages.EN ? 'Sep 2025 – Present ' : 'ก.ย. 2568 - ปัจจุบัน '}
               {language == Languages.EN
                 ? `(${props.yearsEs == 1 || props.yearsEs == 0 ? `${props.yearsEs} year` : `${props.yearsEs} years`} ${
                     props.monthsEs == 1 || props.monthsEs == 0 ? `${props.monthsEs} month` : `${props.monthsEs} months`
@@ -250,6 +266,7 @@ function WorkExperience(props: Props) {
                 : `(${props.yearsEs} ปี ${props.monthsEs} เดือน)`}
             </p>
           </div>
+          {/*  */}
         </div>
         <div className="flex flex-none justify-center">
           <ol className="relative border-s-8 border-blue-600 dark:border-gray-700">

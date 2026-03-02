@@ -49,7 +49,7 @@ function App() {
 
   // set years and months
   const [startDate] = useState(new Date('June 1, 2022'));
-  const [startDateES] = useState(new Date('July 1, 2024'));
+  const [startDateES] = useState(new Date('Sep 1, 2025'));
   const [currentDate] = useState(new Date());
   const [years, setYears] = useState(0);
   const [months, setMonths] = useState(0);
