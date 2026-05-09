@@ -70,6 +70,23 @@ body {
 .cursor.hover { width: 6px; height: 6px; }
 .cursor-ring.hover { width: 56px; height: 56px; border-color: rgba(0,0,0,0.15); }
 
+/* Hide custom cursor on mobile/touch devices */
+@media (pointer: coarse) {
+  .cursor, .cursor-ring {
+    display: none !important;
+  }
+  .cursor-none {
+    cursor: auto !important;
+  }
+}
+
+.no-custom-cursor .cursor, .no-custom-cursor .cursor-ring {
+  display: none !important;
+}
+.no-custom-cursor.cursor-none {
+  cursor: auto !important;
+}
+
 /* Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }

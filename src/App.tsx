@@ -154,6 +154,12 @@ function App() {
 
   // Custom Cursor Logic
   useEffect(() => {
+    // Skip cursor logic on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      document.body.classList.add('no-custom-cursor');
+      return;
+    }
+
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
     let mx = 0, my = 0, rx = 0, ry = 0;
