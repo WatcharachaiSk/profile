@@ -23,17 +23,18 @@ export const fetchData = createAsyncThunk('data/fetchData', async () => {
     return response.data;
   } catch (error) {
     console.log(error);
-
+    throw error;
   }
 });
 
-export const updateViewer = createAsyncThunk('data/fetchData', async () => {
+export const updateViewer = createAsyncThunk('data/updateViewer', async () => {
   const url = `${API.viewer}/p1-2x0637795f-3b47-493c-a921-46185c94eace-os01`
   try {
     const response = await axios(configAxios('put', url));
     return response.data;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 });
 
@@ -53,6 +54,9 @@ const viewerSlice = createSlice({
       .addCase(fetchData.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message ?? 'Failed to fetch data';
+      })
+      .addCase(updateViewer.fulfilled, (state, action) => {
+        state.data = action.payload;
       });
   },
 });

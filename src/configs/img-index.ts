@@ -20,7 +20,7 @@ import bootstrap from '../../src/assets/imgs/bootstrap-logo-69A1CCC10B-seeklogo.
 import vite from '../../src/assets/imgs/vite_logo.svg'
 import flagsTH from '../../src/assets/flags/thai.png'
 import flagsEN from '../../src/assets/flags/en-us.svg'
-import profileMe from '../../src/assets/imgs/2567-04-28.png'
+import profileMe from '../../src/assets/imgs/IMG_2532.jpg'
 import asInternship from '../../src/assets/imgs/asInternship.png'
 import dbEaver from '../../src/assets/logos/DBeaver_logo.svg.png'
 import figma from '../../src/assets/logos/figma.png'

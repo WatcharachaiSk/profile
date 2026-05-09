@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watcharachai — UX/UI Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #f5f5f7;
+    --light-gray: #e8e8ed;
+    --mid-gray: #8e8e93;
+    --dark-gray: #3a3a3c;
+    --black: #1d1d1f;
+    --accent: #6e6e73;
+    --nav-height: 56px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--black);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,0,0,0.25);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(.23,1,.32,1), width 0.3s ease, height 0.3s ease, opacity 0.2s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor.hover { width: 6px; height: 6px; }
+  .cursor-ring.hover { width: 56px; height: 56px; border-color: rgba(0,0,0,0.15); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--nav-height);
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    color: var(--black);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--dark-gray);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, #f0f0f5 0%, #ffffff 70%);
+    z-index: 0;
+  }
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(56px, 8vw, 110px);
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    color: var(--black);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.35s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 300;
+    color: var(--mid-gray);
+    margin-top: 24px;
+    margin-bottom: 52px;
+    letter-spacing: -0.2px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-cta {
+    display: inline-flex; gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.65s forwards;
+  }
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 980px;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--dark-gray); transform: scale(1.02); }
+  .btn-outline {
+    padding: 14px 32px;
+    border: 1px solid var(--light-gray);
+    color: var(--black);
+    border-radius: 980px;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--mid-gray); transform: scale(1.02); }
+
+  .scroll-hint {
+    position: absolute; bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeIn 1s 1.2s forwards;
+  }
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--mid-gray));
+    animation: scrollPulse 2s 1.4s infinite;
+  }
+  .scroll-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid-gray); }
+
+  /* SECTION BASE */
+  section { padding: 120px 40px; max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--mid-gray); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 400; line-height: 1.1;
+    letter-spacing: -1px; color: var(--black);
+    margin-bottom: 60px;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* WORK / PROJECTS */
+  #work { padding-top: 80px; }
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  .project-card {
+    position: relative;
+    background: var(--off-white);
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 32px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.5s cubic-bezier(.23,1,.32,1);
+  }
+  .project-card:first-child { border-radius: 24px 0 0 0; }
+  .project-card:nth-child(2) { border-radius: 0 24px 0 0; }
+  .project-card:nth-child(3) { border-radius: 0 0 0 24px; }
+  .project-card:last-child { border-radius: 0 0 24px 0; }
+  .project-card:hover { transform: scale(0.99); z-index: 1; }
+
+  .project-bg {
+    position: absolute; inset: 0;
+    background: var(--bg);
+    transition: transform 0.6s cubic-bezier(.23,1,.32,1);
+  }
+  .project-card:hover .project-bg { transform: scale(1.04); }
+
+  .project-number {
+    position: absolute; top: 28px; right: 28px;
+    font-size: 11px; color: rgba(0,0,0,0.3);
+    font-weight: 400; letter-spacing: 0.05em;
+  }
+  .project-tag {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(0,0,0,0.4); margin-bottom: 10px;
+  }
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px; font-weight: 400; line-height: 1.2;
+    letter-spacing: -0.5px; color: var(--black);
+    position: relative; z-index: 1;
+  }
+  .project-desc {
+    font-size: 13px; color: var(--mid-gray); margin-top: 8px;
+    position: relative; z-index: 1; line-height: 1.6;
+  }
+  .project-arrow {
+    position: absolute; bottom: 28px; right: 28px;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--black);
+    opacity: 0; transform: translateY(4px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 2;
+  }
+  .project-card:hover .project-arrow { opacity: 1; transform: translateY(0); }
+
+  /* WIDE CARD */
+  .project-card.wide {
+    grid-column: span 2;
+    aspect-ratio: 16/6;
+    border-radius: 0 !important;
+  }
+
+  /* WORK EXP */
+  #experience { border-top: 1px solid var(--light-gray); }
+
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 180px 1fr auto;
+    gap: 40px; align-items: start;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--light-gray);
+    position: relative;
+    overflow: hidden;
+  }
+  .exp-item::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--black);
+    transition: width 0.5s cubic-bezier(.23,1,.32,1);
+  }
+  .exp-item:hover::before { width: 100%; }
+
+  .exp-year { font-size: 13px; color: var(--mid-gray); font-weight: 400; padding-top: 3px; }
+  .exp-company { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; letter-spacing: -0.3px; color: var(--black); margin-bottom: 6px; }
+  .exp-role { font-size: 13px; color: var(--mid-gray); line-height: 1.6; }
+  .exp-badge {
+    padding: 6px 14px;
+    border: 1px solid var(--light-gray);
+    border-radius: 980px;
+    font-size: 11px; color: var(--dark-gray);
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  /* ABOUT */
+  #about { border-top: 1px solid var(--light-gray); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-photo {
+    aspect-ratio: 3/4;
+    background: var(--off-white);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+  .about-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 72px; color: var(--light-gray);
+  }
+  .about-text { padding-top: 12px; }
+  .about-bio {
+    font-size: 18px; line-height: 1.75; font-weight: 300;
+    color: var(--dark-gray); margin-bottom: 40px;
+    letter-spacing: -0.1px;
+  }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+  .skill-pill {
+    padding: 8px 18px;
+    background: var(--off-white);
+    border-radius: 980px;
+    font-size: 12px; color: var(--dark-gray);
+    letter-spacing: 0.02em;
+    transition: background 0.2s;
+  }
+  .skill-pill:hover { background: var(--light-gray); }
+
+  .contact-line {
+    display: flex; gap: 20px; flex-wrap: wrap;
+  }
+  .contact-link {
+    font-size: 13px; color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--light-gray);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .contact-link:hover { border-color: var(--black); }
+
+  /* FOOTER */
+  footer {
+    max-width: 1100px; margin: 0 auto;
+    padding: 40px 40px 60px;
+    border-top: 1px solid var(--light-gray);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 12px; color: var(--mid-gray); }
+  .footer-tag { font-family: 'DM Serif Display', serif; font-size: 22px; letter-spacing: -0.5px; color: var(--light-gray); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(.23,1,.32,1), transform 0.8s cubic-bezier(.23,1,.32,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 20px; }
+    section { padding: 80px 24px; }
+    .work-grid { grid-template-columns: 1fr; }
+    .project-card, .project-card.wide { border-radius: 16px !important; aspect-ratio: 4/3; grid-column: span 1; }
+    .work-grid { gap: 12px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .exp-item { grid-template-columns: 1fr; gap: 8px; }
+    .exp-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#home" class="nav-logo">Watcharachai</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="home" style="min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-label">UX/UI Designer · Bangkok</p>
+    <h1 class="hero-title">Watcharachai<br><em>Saenkham</em></h1>
+    <p class="hero-sub">Designing digital experiences that<br>feel inevitable.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-primary">View Work</a>
+      <a href="#about" class="btn-outline">About Me</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-label">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- WORK -->
+<div style="padding: 0; max-width: 1100px; margin: 0 auto;" id="work">
+  <section style="padding-bottom: 32px;">
+    <p class="section-label reveal">Selected Work</p>
+    <h2 class="section-title reveal reveal-delay-1">Projects &<br><em>Experiments</em></h2>
+  </section>
+</div>
+
+<div style="max-width: 1100px; margin: 0 auto; padding: 0 40px 120px;">
+  <div class="work-grid">
+
+    <a href="https://watcharachaisk.github.io/profile/" target="_blank" class="project-card reveal"
+       style="--bg: #f0ede8;">
+      <div class="project-bg" style="background: #f0ede8;"></div>
+      <span class="project-number">01</span>
+      <p class="project-tag">UI Design · Web</p>
+      <h3 class="project-title">Personal<br>Portfolio</h3>
+      <p class="project-desc">A minimal showcase of craft and process.</p>
+      <div class="project-arrow">↗</div>
+    </a>
+
+    <a href="https://watcharachaisk.github.io/profile/#" target="_blank" class="project-card reveal reveal-delay-1"
+       style="--bg: #e8ecf0;">
+      <div class="project-bg" style="background: #e8ecf0;"></div>
+      <span class="project-number">02</span>
+      <p class="project-tag">UX Research · Mobile</p>
+      <h3 class="project-title">Mobile<br>App Design</h3>
+      <p class="project-desc">End-to-end user experience for a lifestyle app.</p>
+      <div class="project-arrow">↗</div>
+    </a>
+
+    <a href="https://watcharachaisk.github.io/profile/#" target="_blank" class="project-card reveal reveal-delay-2"
+       style="--bg: #ece8f0;">
+      <div class="project-bg" style="background: #ece8f0;"></div>
+      <span class="project-number">03</span>
+      <p class="project-tag">Design System</p>
+      <h3 class="project-title">UI Component<br>Library</h3>
+      <p class="project-desc">Scalable design system built for teams.</p>
+      <div class="project-arrow">↗</div>
+    </a>
+
+    <a href="https://watcharachaisk.github.io/profile/#" target="_blank" class="project-card reveal reveal-delay-3"
+       style="--bg: #e8f0ec;">
+      <div class="project-bg" style="background: #e8f0ec;"></div>
+      <span class="project-number">04</span>
+      <p class="project-tag">Branding · Identity</p>
+      <h3 class="project-title">Brand Identity<br>Design</h3>
+      <p class="project-desc">Visual identity for an early-stage startup.</p>
+      <div class="project-arrow">↗</div>
+    </a>
+
+    <a href="https://watcharachaisk.github.io/profile/#" target="_blank" class="project-card wide reveal"
+       style="--bg: #f5f5f2; margin-top: 2px;">
+      <div class="project-bg" style="background: #f5f5f2;"></div>
+      <span class="project-number">05</span>
+      <p class="project-tag">Dashboard · Data Viz</p>
+      <h3 class="project-title">Analytics Dashboard</h3>
+      <p class="project-desc">Complex data made beautifully simple.</p>
+      <div class="project-arrow">↗</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label reveal">Background</p>
+  <h2 class="section-title reveal reveal-delay-1">Work<br><em>Experience</em></h2>
+
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <span class="exp-year">2023 — Present</span>
+      <div>
+        <p class="exp-company">Current Company</p>
+        <p class="exp-role">Lead UX/UI Designer · Responsible for product design, user research, and design systems across multiple product lines.</p>
+      </div>
+      <span class="exp-badge">Full-time</span>
+    </div>
+
+    <div class="exp-item reveal reveal-delay-1">
+      <span class="exp-year">2021 — 2023</span>
+      <div>
+        <p class="exp-company">Previous Studio</p>
+        <p class="exp-role">Senior UI Designer · Crafted visual experiences for web and mobile platforms. Led design sprints and client workshops.</p>
+      </div>
+      <span class="exp-badge">Full-time</span>
+    </div>
+
+    <div class="exp-item reveal reveal-delay-2">
+      <span class="exp-year">2019 — 2021</span>
+      <div>
+        <p class="exp-company">Design Agency</p>
+        <p class="exp-role">UX Designer · User research, wireframing, and prototyping for e-commerce and fintech clients.</p>
+      </div>
+      <span class="exp-badge">Full-time</span>
+    </div>
+
+    <div class="exp-item reveal reveal-delay-3">
+      <span class="exp-year">2018 — 2019</span>
+      <div>
+        <p class="exp-company">Freelance</p>
+        <p class="exp-role">UI/Visual Designer · Branding and interface design for startups and small businesses across Southeast Asia.</p>
+      </div>
+      <span class="exp-badge">Freelance</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label reveal">Hello</p>
+  <h2 class="section-title reveal reveal-delay-1">About<br><em>Me</em></h2>
+
+  <div class="about-grid">
+    <div class="about-photo reveal">
+      <div class="about-photo-placeholder">W</div>
+    </div>
+    <div class="about-text reveal reveal-delay-1">
+      <p class="about-bio">
+        I'm Watcharachai, a UX/UI designer based in Bangkok. I believe great design is invisible — it just works. I obsess over the details that make interactions feel natural, elegant, and effortless.
+        <br><br>
+        My process begins with curiosity: understanding people before pixels, asking why before how. I bring together research, strategy, and craft to create digital products people actually enjoy using.
+      </p>
+
+      <div class="skills-grid">
+        <span class="skill-pill">UX Research</span>
+        <span class="skill-pill">UI Design</span>
+        <span class="skill-pill">Figma</span>
+        <span class="skill-pill">Prototyping</span>
+        <span class="skill-pill">Design Systems</span>
+        <span class="skill-pill">Interaction Design</span>
+        <span class="skill-pill">Wireframing</span>
+        <span class="skill-pill">User Testing</span>
+        <span class="skill-pill">Adobe XD</span>
+        <span class="skill-pill">Branding</span>
+      </div>
+
+      <div class="contact-line">
+        <a href="https://watcharachaisk.github.io/profile/" target="_blank" class="contact-link">Portfolio ↗</a>
+        <a href="mailto:watcharachai@email.com" class="contact-link">Email ↗</a>
+        <a href="#" class="contact-link">LinkedIn ↗</a>
+        <a href="#" class="contact-link">Behance ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-copy">© 2025 Watcharachai Saenkham</p>
+  <p class="footer-tag">Design.</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function animRing() {
+    rx = lerp(rx, mx, 0.12);
+    ry = lerp(ry, my, 0.12);
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth nav color
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 40
+      ? 'rgba(255,255,255,0.92)'
+      : 'rgba(255,255,255,0.82)';
+  });
+</script>
+</body>
+</html>

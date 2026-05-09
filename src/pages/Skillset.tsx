@@ -6,75 +6,98 @@ import './index.css';
 import { FaLinkedin } from 'react-icons/fa6';
 import { MdEmail } from 'react-icons/md';
 import { FaGithub } from 'react-icons/fa';
-import { Button, Tooltip } from '@mui/material';
+import { Tooltip } from '@mui/material';
 import { LinkEnum } from '../enums/link.enum';
+
 interface Props {
   openWebsite: (link: string) => void;
   language: string;
 }
+
 function Skillset(props: Props) {
   const { language } = props;
 
+  const tools = [
+    { name: 'VS Code', icon: IMGS_LOGOS.vsCode },
+    { name: 'Docker', icon: IMGS_LOGOS.dockerLogo },
+    { name: 'Postman', icon: IMGS_LOGOS.postMan },
+    { name: 'Git', icon: IMGS_LOGOS.gitH },
+    { name: 'DBeaver', icon: IMGS_LOGOS.dbEaver },
+    { name: 'Figma', icon: IMGS_LOGOS.figma },
+  ];
+
   return (
-    <div className="flex flex-col h-fit w-screen mb-20">
-      <div className="flex justify-center text-3xl xl:text-6xl md:text-5xl" style={{ fontFamily: 'THSarabunNew-Bold' }}>
-        <p className="indent-5 ">{language == Languages.EN ? 'Specialized Tool Skillset' : 'ทักษะในการใช้เครื่องมือที่เชี่ยวชาญ'}</p>
+    <section className="py-24 px-10 max-w-[1100px] mx-auto border-t border-gray-100">
+      <p className="section-label">{language === Languages.EN ? 'Tools' : 'เครื่องมือ'}</p>
+      <h2 className="section-title">
+        {language === Languages.EN ? (
+          <>Specialized<br /><em className="not-italic text-gray-400">Skillset</em></>
+        ) : (
+          <>ทักษะความเชี่ยวชาญ<br /><em className="not-italic text-gray-400">เครื่องมือ</em></>
+        )}
+      </h2>
+
+      <div className="flex flex-wrap justify-center gap-12 mb-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-700">
+        {tools.map((tool) => (
+          <img 
+            key={tool.name} 
+            src={tool.icon} 
+            alt={tool.name} 
+            className="h-10 w-auto object-contain hover:scale-110 transition-transform" 
+          />
+        ))}
       </div>
-      <div className="flex justify-center logos">
-        <img src={IMGS_LOGOS.vsCode} alt="" />
-        <img src={IMGS_LOGOS.dockerLogo} alt="" />
-        <img src={IMGS_LOGOS.postMan} alt="" />
-        <img src={IMGS_LOGOS.gitH} alt="" />
-        <img src={IMGS_LOGOS.dbEaver} alt="" />
-        <img src={IMGS_LOGOS.soutreeLogo} alt="" />
-        <img src={IMGS_LOGOS.figma} alt="" />
-      </div>
 
-      <div className="flex justify-center mt-10">
-        {/*  */}
-        <div className="flex-1 flex justify-end mx-5 mb:mx-20 xl:mx-20">
-          <img src={IMGS.profileW} className="shadow-xl rounded-lg object-scale-down h-auto w-auto md:w-8/12 xl:md:w-8/12  z-10 relative"></img>
-        </div>
-        {/*  */}
-        <div className="flex-1 flex flex-col justify-center">
-          <div>
-            <p className="text-2xl xl:text-4xl md:text-4xl">{language == Languages.EN ? 'You can reach me through:' : 'สามารถติดต่อผมได้ ทาง'}</p>
-          </div>
-          <div>
-            <p className="indent-2 underline text-xl xl:text-3xl md:text-3xl">watcharachai.sk@gmail.com</p>
-          </div>
-          <div className="flex mt-3">
-            <Tooltip title={LinkEnum.LinkedIn} followCursor>
-              <Button
-                onClick={() => {
-                  props.openWebsite(LinkEnum.LinkedIn);
-                }}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center bg-gray-50 rounded-3xl p-10 md:p-16">
+        <div className="order-2 md:order-1">
+          <h3 className="font-serif text-3xl mb-6">
+            {language === Languages.EN ? 'Let\'s build something together.' : 'มาสร้างสรรค์ผลงานด้วยกัน'}
+          </h3>
+          <p className="text-gray-500 mb-8 max-w-sm">
+            {language === Languages.EN 
+              ? 'I\'m always open to new opportunities and interesting projects.' 
+              : 'ผมเปิดรับโอกาสใหม่ๆ และโปรเจกต์ที่น่าสนใจเสมอ'}
+          </p>
+          
+          <div className="flex gap-4">
+            <Tooltip title="LinkedIn">
+              <button 
+                onClick={() => props.openWebsite(LinkEnum.LinkedIn)}
+                className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-all"
               >
-                <FaLinkedin color="#06172a" size={50} />
-              </Button>
+                <FaLinkedin size={20} />
+              </button>
             </Tooltip>
-
-            <Tooltip title={LinkEnum.Git} followCursor>
-              <Button
-                onClick={() => {
-                  props.openWebsite(LinkEnum.Git);
-                }}
+            <Tooltip title="GitHub">
+              <button 
+                onClick={() => props.openWebsite(LinkEnum.Git)}
+                className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-all"
               >
-                <FaGithub color="#06172a" size={50} />
-              </Button>
+                <FaGithub size={20} />
+              </button>
             </Tooltip>
-
-            <Tooltip title={LinkEnum.Email} followCursor>
-              <a href={`mailto:${LinkEnum.Email}`}>
-                <Button>
-                  <MdEmail color="#06172a" size={56} />
-                </Button>
+            <Tooltip title="Email">
+              <a 
+                href={`mailto:${LinkEnum.Email}`}
+                className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-all"
+              >
+                <MdEmail size={22} />
               </a>
             </Tooltip>
           </div>
         </div>
+        
+        <div className="order-1 md:order-2 flex justify-center md:justify-end">
+          <div className="relative w-full max-w-[300px] aspect-square rounded-2xl overflow-hidden shadow-2xl">
+            <img 
+              src={IMGS.profileW} 
+              alt="Contact" 
+              className="w-full h-full object-cover" 
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 

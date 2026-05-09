@@ -7,6 +7,7 @@ import HomePage from './pages/home/HomePage';
 import { SelectChangeEvent } from '@mui/material';
 import AboutMe from './pages/AboutMe';
 import WorkExperience from './pages/WorkExperience';
+import Projects from './pages/Projects';
 // import Cards from './pages/Cards';
 import Skillset from './pages/Skillset';
 import { ScrollEnum } from './enums/scroll.enum';
@@ -45,6 +46,7 @@ function App() {
   // const [count, setCount] = useState(0);
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'EN');
   const [showButton, setShowButton] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dataStoredViewer, setDataStoredViewer] = useState<Viewer>({ date: new Date(), counts_view: 0 });
 
   // set years and months
@@ -88,9 +90,11 @@ function App() {
   };
 
   const getStoredViewer = () => {
-    const storedViewer: any = localStorage.getItem('viewer');
-    const data: Viewer = JSON.parse(storedViewer);
-    setDataStoredViewer(data);
+    const storedViewer = localStorage.getItem('viewer');
+    if (storedViewer) {
+      const data: Viewer = JSON.parse(storedViewer);
+      setDataStoredViewer(data);
+    }
   };
 
   useEffect(() => {
@@ -103,36 +107,37 @@ function App() {
     if (!storedLanguage) {
       localStorage.setItem('language', 'EN');
     }
+    
     if (!storedViewer) {
       const payload: Viewer = {
         date: date,
         counts_view: 1,
       };
       localStorage.setItem('viewer', JSON.stringify(payload));
+      dispatch(updateViewer()); // Initial count
     } else {
-      let payload: Viewer = JSON.parse(storedViewer);
+      const payload: Viewer = JSON.parse(storedViewer);
       const checkDate = isSameDay(payload.date, date);
-      console.log('checkDate is', checkDate);
+      // console.log('checkDate is', checkDate);
 
-      if (checkDate && payload.counts_view < 22) {
-        payload.counts_view = payload.counts_view + 1;
-        localStorage.setItem('viewer', JSON.stringify(payload));
-      }
-      if (!checkDate) {
+      if (checkDate) {
+        if (payload.counts_view < 22) {
+          payload.counts_view = payload.counts_view + 1;
+          localStorage.setItem('viewer', JSON.stringify(payload));
+          // Update backend every few local views to prevent spam but ensure it counts
+          if (payload.counts_view % 3 === 0) {
+            dispatch(updateViewer());
+          }
+        }
+      } else {
         payload.date = date;
         payload.counts_view = 1;
         localStorage.setItem('viewer', JSON.stringify(payload));
+        dispatch(updateViewer()); // First visit of the day
       }
     }
     getStoredViewer();
-  }, []);
-
-  useEffect(() => {
-    if (dataStoredViewer.counts_view % 2 == 0 && dataStoredViewer.counts_view != 0 && dataStoredViewer.counts_view != 22) {
-      // console.log('dataStoredViewer.counts_view is ', dataStoredViewer.counts_view);
-      dispatch(updateViewer());
-    }
-  }, [dataStoredViewer.counts_view]);
+  }, [dispatch]);
 
   const handleChangeLanguage = (event: SelectChangeEvent) => {
     // console.log('event.target.value is ', event.target.value);
@@ -142,22 +147,94 @@ function App() {
   };
 
   // set Ref Page
-  const scrollHomeRef = useRef<any>(null);
-  const scrollCvRef = useRef<any>(null);
-  const scrollWorksRef = useRef<any>(null);
-  const scrollAboutRef = useRef<any>(null);
+  const scrollHomeRef = useRef<HTMLDivElement>(null);
+  const scrollCvRef = useRef<HTMLDivElement>(null);
+  const scrollWorksRef = useRef<HTMLDivElement>(null);
+  const scrollAboutRef = useRef<HTMLDivElement>(null);
+
+  // Custom Cursor Logic
+  useEffect(() => {
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    let rafId: number;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (cursor) {
+        cursor.style.left = mx + 'px';
+        cursor.style.top = my + 'px';
+      }
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const animRing = () => {
+      rx = lerp(rx, mx, 0.12);
+      ry = lerp(ry, my, 0.12);
+      if (ring) {
+        ring.style.left = rx + 'px';
+        ring.style.top = ry + 'px';
+      }
+      rafId = requestAnimationFrame(animRing);
+    };
+    rafId = requestAnimationFrame(animRing);
+
+    const onMouseEnter = () => {
+      cursor?.classList.add('hover');
+      ring?.classList.add('hover');
+    };
+    const onMouseLeave = () => {
+      cursor?.classList.remove('hover');
+      ring?.classList.remove('hover');
+    };
+
+    const elements = document.querySelectorAll('a, button');
+    elements.forEach((el) => {
+      el.addEventListener('mouseenter', onMouseEnter);
+      el.addEventListener('mouseleave', onMouseLeave);
+    });
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(rafId);
+      elements.forEach((el) => {
+        el.removeEventListener('mouseenter', onMouseEnter);
+        el.removeEventListener('mouseleave', onMouseLeave);
+      });
+    };
+  }, []);
+
+  // Reveal on scroll
+  useEffect(() => {
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   // ฟังก์ชันที่จะถูกเรียกเมื่อกดปุ่ม
   const handleButtonClick = (isScroll: string) => {
     // ให้ใช้ method scrollIntoView() บน ref.current
     if (isScroll == ScrollEnum.Home) {
-      scrollHomeRef.current.scrollIntoView({ behavior: 'smooth' });
+      scrollHomeRef.current?.scrollIntoView({ behavior: 'smooth' });
     } else if (isScroll == ScrollEnum.Cv) {
-      scrollCvRef.current.scrollIntoView({ behavior: 'smooth' });
+      scrollCvRef.current?.scrollIntoView({ behavior: 'smooth' });
     } else if (isScroll == ScrollEnum.Works) {
-      scrollWorksRef.current.scrollIntoView({ behavior: 'smooth' });
+      scrollWorksRef.current?.scrollIntoView({ behavior: 'smooth' });
     } else if (isScroll == ScrollEnum.About) {
-      scrollAboutRef.current.scrollIntoView({ behavior: 'smooth' });
+      scrollAboutRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -179,30 +256,38 @@ function App() {
   }, []);
 
   return (
-    <div style={{ fontFamily: 'THSarabunNew', fontSize: 22 }}>
+    <div className={`cursor-none ${language === 'TH' ? 'lang-th' : ''}`}>
+      <div className="cursor" id="cursor"></div>
+      <div className="cursor-ring" id="cursorRing"></div>
       <NavBar handleChangeLanguage={handleChangeLanguage} handleButtonClick={handleButtonClick} language={language} />
-      <div className="flex flex-col" style={{ fontFamily: 'THSarabunNew', fontSize: 18 }}>
+      <div className="flex flex-col">
         <div ref={scrollHomeRef}>
           <HomePage language={language} />
         </div>
-        <div className="mt-2" />
 
-        <AboutMe language={language} />
-        <div className="mt-2" />
-        <div ref={scrollWorksRef}>
+        {/* <div className="reveal">
+          <Projects language={language} />
+        </div> */}
+
+        <div ref={scrollWorksRef} className="reveal reveal-delay-1">
           <WorkExperience openWebsite={openWebsite} language={language} years={years} months={months} yearsEs={yearsEs} monthsEs={monthsEs} />
         </div>
-        <div className="mt-10" />
-        <div ref={scrollAboutRef}>
+
+        <div ref={scrollAboutRef} className="reveal reveal-delay-2">
+          <AboutMe language={language} />
+        </div>
+
+        <div className="reveal reveal-delay-3">
           <Skillset openWebsite={openWebsite} language={language} />
         </div>
-        <div className="mt-96" />
-        <div ref={scrollCvRef}>
+
+        <div ref={scrollCvRef} className="reveal reveal-delay-3">
           <Cv />
         </div>
+
         {showButton && (
           <button
-            className="text-base fixed bottom-4 right-4 z-10 p-3 bg-blue-500 text-white rounded-full shadow-lg transition-opacity"
+            className="text-base fixed bottom-4 right-4 z-10 p-3 bg-black text-white rounded-full shadow-lg transition-opacity"
             onClick={() => {
               handleButtonClick(ScrollEnum.Home);
             }}
@@ -213,9 +298,11 @@ function App() {
             </div>
           </button>
         )}
-
-        {/* <h1 className="text-3xl font-bold ">Hello world!</h1> */}
       </div>
+      <footer className="max-w-[1100px] mx-auto py-10 px-10 border-t border-gray-200 flex justify-between items-center mt-20">
+        <p className="text-xs text-gray-500">© 2025 Watcharachai Saenkham</p>
+        <p className="font-serif text-2xl text-gray-300">Design.</p>
+      </footer>
     </div>
   );
 }
