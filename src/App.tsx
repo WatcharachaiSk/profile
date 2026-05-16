@@ -271,9 +271,9 @@ function App() {
           <HomePage language={language} />
         </div>
 
-        {/* <div className="reveal">
+        <div className="reveal">
           <Projects language={language} />
-        </div> */}
+        </div>
 
         <div ref={scrollWorksRef} className="reveal reveal-delay-1">
           <WorkExperience openWebsite={openWebsite} language={language} years={years} months={months} yearsEs={yearsEs} monthsEs={monthsEs} />
@@ -306,7 +306,7 @@ function App() {
         )}
       </div>
       <footer className="max-w-[1100px] mx-auto py-10 px-10 border-t border-gray-200 flex justify-between items-center mt-20">
-        <p className="text-xs text-gray-500">© 2025 Watcharachai Saenkham</p>
+        <p className="text-xs text-gray-500">© 2025 Watcharachai Samkham</p>
         <p className="font-serif text-2xl text-gray-300">Design.</p>
       </footer>
     </div>

@@ -21,7 +21,7 @@ function HomePage(props: Props) {
 
         <h1 className={`font-serif ${fontConfig.getTitle(language)} leading-[1.0] tracking-[-2px] text-black mb-2 animate-[fadeUp_0.9s_0.35s_forwards] opacity-0`}>
           Watcharachai<br />
-          <em className="not-italic text-gray-500">Saenkham</em>
+          <em className="not-italic text-gray-500">Samkham</em>
         </h1>
 
         <p className={`${fontConfig.getExpCompany(language)} font-light text-gray-500 mt-6 mb-12 tracking-[-0.2px] leading-relaxed animate-[fadeUp_0.9s_0.5s_forwards] opacity-0`}>

@@ -109,6 +109,15 @@ body {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 
+/* 3D Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
 /* Section Base */
 .section-label {
   font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
